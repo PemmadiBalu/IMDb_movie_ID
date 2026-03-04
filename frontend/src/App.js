@@ -25,7 +25,7 @@ function App() {
       `;
 
       const sentimentRes = await axios.post(
-        "http://localhost:5000/api/sentiment",
+        "https://imdb-movie-id.onrender.com",
         { reviews }
       );
 
