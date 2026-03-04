@@ -12,7 +12,7 @@ function App() {
     try {
       // Fetch movie details
       const movieRes = await axios.get(
-        `http://localhost:5000/api/movie/${movieId}`
+        'http://www.omdbapi.com/?i=${imdbID}&apikey=${process.env.OMDB_API_KEY}`
       );
 
       setMovie(movieRes.data);
