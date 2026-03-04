@@ -3,6 +3,9 @@ import { useState } from "react";
 import axios from "axios";
 import "./App.css";
 
+const BASE_URL = "https://imdb-movie-id.onrender.com"; 
+// replace with your real Render backend URL
+
 function App() {
   const [movieId, setMovieId] = useState("");
   const [movie, setMovie] = useState(null);
@@ -10,29 +13,30 @@ function App() {
 
   const handleAnalyze = async () => {
     try {
-      // Fetch movie details
+      // ✅ Fetch movie details from your backend (NOT directly from OMDb)
       const movieRes = await axios.get(
-        'http://www.omdbapi.com/?i=${imdbID}&apikey=${process.env.OMDB_API_KEY}`
+        `${BASE_URL}/api/movie/${movieId}`
       );
 
       setMovie(movieRes.data);
 
-      // Fake review text (replace later with real reviews)
       const reviews = `
-      Amazing movie. Loved the action and story.
-      Great performances and visuals.
-      A bit slow in middle but overall fantastic.
+        Amazing movie. Loved the action and story.
+        Great performances and visuals.
+        A bit slow in middle but overall fantastic.
       `;
 
+      // ✅ Call sentiment API route properly
       const sentimentRes = await axios.post(
-        "https://imdb-movie-id.onrender.com",
+        `${BASE_URL}/api/sentiment`,
         { reviews }
       );
 
       setSentiment(sentimentRes.data.result);
+
     } catch (error) {
-      alert("Something went wrong.");
       console.error(error);
+      alert("Something went wrong. Check console.");
     }
   };
 
